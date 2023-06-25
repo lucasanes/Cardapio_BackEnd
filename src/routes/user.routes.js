@@ -14,8 +14,8 @@ const VerifyTokenController = require("../modules/user/VerifyToken/VerifyTokenCo
 const verifyTokenController = new VerifyTokenController();
 
 userRouters.post("/", createUserController.handle);
-userRouters.put("/:id", editUserController.handle);
+userRouters.put("/:token", editUserController.handle);
 userRouters.post("/login", loginController.handle);
-userRouters.post("/token", verifyTokenController.handle);
+userRouters.get("/token/:token", verifyTokenController.handle);
 
 module.exports = userRouters;

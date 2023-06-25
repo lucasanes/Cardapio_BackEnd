@@ -1,16 +1,19 @@
 const { hash, compare } = require("bcrypt");
 const AppError = require('../../../utils/AppError');
 const prisma = require("../../database/prisma");
+require ("../../../globalFunctions")
 
 const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 const senhaRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9!@#$%*_&^-]{8,24})$/
 
 class EditUserUseCase {
-  async execute({ id, nome, username, email, senha, senhaConfirmada, senhaAtual }) {
+  async execute({ token, nome, username, email, senha, senhaConfirmada, senhaAtual }) {
 
-    if (!id) {
-      throw new AppError("ID não existente.")
+    if (!verifyToken(token)) {
+      throw new AppError("Sem permissão.")
     }
+
+    const id = decodeToken(token)
 
     const user = await prisma.user.findFirst({
       where: {

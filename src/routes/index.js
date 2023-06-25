@@ -9,6 +9,6 @@ const getAllController = new GetAllController();
 routers.use("/user", userRouters);
 routers.use("/categoria", categoriaRouters);
 
-routers.get("/getall", getAllController.handle);
+routers.get("/restaurante/:id", getAllController.handle);
 
 module.exports = routers;

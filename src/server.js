@@ -9,7 +9,6 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.json());
-app.use(cors());
 app.use(routers)
 
 app.use((error, request, response, next) => {
@@ -24,6 +23,10 @@ app.use((error, request, response, next) => {
     mensagem: "Erro interno do servidor!"
   });
 });
+
+app.use(cors({
+  origin: 'https://a.com'
+}));
 
 app.listen("8080", () =>
   console.log("Server is running")

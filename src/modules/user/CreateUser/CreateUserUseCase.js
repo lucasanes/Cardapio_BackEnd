@@ -6,7 +6,17 @@ const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 const senhaRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9!@#$%*_&^-]{8,24})$/
 
 class CreateUserUseCase {
-  async execute({username, email, senha, senhaConfirmada }) {
+  async execute({username, email, senha, senhaConfirmada, nomeRestaurante, codigo }) {
+
+    if (codigo != undefined && codigo != '' && codigo != null) {
+
+      if (codigo != process.env.SECRET_CODE) {
+        throw new AppError("Você precisa ter um código válido para criar uma conta.")
+      }
+
+    } else {
+      throw new AppError("Você precisa ter um código para criar uma conta.")
+    }
 
     if (username == undefined || username == '' || username == null) {
       throw new AppError("Dados necessários não preenchidos.")
@@ -72,6 +82,10 @@ class CreateUserUseCase {
 
     const senhaCript = await hash(senha, 10);
 
+    if (nomeRestaurante == null || nomeRestaurante == undefined || nomeRestaurante == "") {
+      throw new AppError("Dados necessários não preenchidos!")
+    }
+
     const user = await prisma.user.create({
       data: {
         username,
@@ -80,7 +94,14 @@ class CreateUserUseCase {
       },
     });
 
-    return user;
+    const restaurante = await prisma.restaurante.create({
+      data: {
+        nome: nomeRestaurante,
+        userId: user.id
+      }
+    })
+
+    return {user, restaurante};
   }
 }
 

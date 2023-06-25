@@ -2,33 +2,27 @@ const auth = require("../../../config/auth");
 const AppError = require("../../../utils/AppError");
 const prisma = require("../../database/prisma");
 const jwt = require("jsonwebtoken");
+require("../../../globalFunctions")
 
 class VerifyTokenUseCase {
   async execute({ token }) {
 
-    let tokenIsValid
-
     if (token == undefined || token == null || token == '') {
-        throw new AppError("Você precisa passar o token.")
+        throw new AppError("Ocorreu algum erro.")
     }
 
-    if (!token) {
-        throw new AppError("Token inválido.")
-    } else {
+    if (verifyToken(token)) {
 
-        try {
-
-            if (jwt.verify(token, auth.jwt.secretUser)) {
-                tokenIsValid = true
+        const user = await prisma.user.findFirst({
+            where: {
+                id: decodeToken(token)
             }
-
-        } catch (erro) {
-            tokenIsValid = false
-        }
-
+        })
+        
+        return {token, user}
+    } else {
+        return false
     }
-    
-    return {tokenIsValid};
   }
 }
 

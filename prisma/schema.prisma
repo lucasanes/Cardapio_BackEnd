@@ -19,7 +19,22 @@ model User {
 
   created_at DateTime @default(now())
 
+  restaurantes Restaurante[]
+
   @@map("users")
+}
+
+model Restaurante {
+  id String @id @default(uuid())
+
+  nome String @unique
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  categorias Categoria[]
+
+  @@map("restaurantes")
 }
 
 model Categoria {
@@ -31,6 +46,9 @@ model Categoria {
 
   created_at DateTime @default(now())
 
+  restauranteId String
+  restaurante   Restaurante @relation(fields: [restauranteId], references: [id], onDelete: Cascade)
+
   produtos Produto[]
 
   @@map("categorias")
@@ -40,14 +58,16 @@ model Produto {
   id String @id @default(uuid())
 
   nome      String
+  nomesAdd  String?
   descricao String
   preco     Float
+  precosAdd String?
   imagem    String
 
   created_at DateTime @default(now())
 
   categoriaId String
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
 
   @@map("produtos")
 }
