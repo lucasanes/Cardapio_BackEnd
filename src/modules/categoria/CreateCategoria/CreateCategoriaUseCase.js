@@ -9,6 +9,14 @@ class CreateCategoriaUseCase {
       throw new AppError("Sem permissão.")
     }
 
+    if (nome == undefined || nome == null || nome == '') {
+      throw new AppError("Sua categoria deve ter um nome.")
+    }
+
+    if (imagem == undefined || imagem == null || imagem == '') {
+      throw new AppError("Sua categoria deve ter uma imagem.")
+    }
+
     const restauranteId = await prisma.restaurante.findFirst({
       where: {
         userId: decodeToken(token)

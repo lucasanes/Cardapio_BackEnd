@@ -46,7 +46,7 @@ class EditCategoriaUseCase {
     if (imagem != undefined && imagem != '') {
       data.imagem = imagem
     } else {
-      data.imagem = null
+      throw new AppError("Sua categoria deve ter uma imagem.")
     }
 
     const categoriaAtualizada = await prisma.categoria.update({

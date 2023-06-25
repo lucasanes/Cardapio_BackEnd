@@ -19,7 +19,7 @@ class CreateUserUseCase {
     }
 
     if (username == undefined || username == '' || username == null) {
-      throw new AppError("Dados necessários não preenchidos.")
+      throw new AppError("Sua conta precisa ter um username.")
     }
 
     username = username.toLowerCase()
@@ -45,7 +45,7 @@ class CreateUserUseCase {
     }
 
     if (email == undefined || email == '' || email == null) {
-      throw new AppError("Dados necessários não preenchidos.")
+      throw new AppError("Sua conta precisa ter um email.")
     }
 
     if (!emailRegex.test(email)) {
@@ -63,7 +63,7 @@ class CreateUserUseCase {
     }
 
     if (senha == undefined || senha == '' || senha == null) {
-      throw new AppError("Dados necessários não preenchidos.")
+      throw new AppError("Sua conta precisa ter uma senha.")
     }
 
     if (senha !== senhaConfirmada) {
@@ -83,7 +83,7 @@ class CreateUserUseCase {
     const senhaCript = await hash(senha, 10);
 
     if (nomeRestaurante == null || nomeRestaurante == undefined || nomeRestaurante == "") {
-      throw new AppError("Dados necessários não preenchidos!")
+      throw new AppError("Sua conta precisa ter o nome de seu restaurante.")
     }
 
     const user = await prisma.user.create({
