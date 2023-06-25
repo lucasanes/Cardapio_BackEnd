@@ -27,25 +27,6 @@ app.use((error, request, response, next) => {
 
 app.use(cors());
 
-app.post('/webhook', (req, res) => {
-  // Executar o comando git pull no diretório do repositório
-  simpleGit("D:/Users/Lucas/Desktop/Programador/ProjetoCardapio/Cardapio_BackEnd")  // Substitua pelo caminho correto do repositório no sistema do colaborador
-    .pull((err, update) => {
-      if (err) {
-        console.error('Erro ao executar git pull:', err);
-        res.sendStatus(500);
-      } else {
-        if (update && update.summary.changes) {
-          console.log('Repositório atualizado');
-          res.sendStatus(200);
-        } else {
-          console.log('Nenhuma alteração no repositório');
-          res.sendStatus(204);
-        }
-      }
-    });
-});
-
-app.listen(process.env.PORT || 8080, "0.0.0.0", () =>
-  console.log("Server is running")
+app.listen(process.env.PORT || 8080, () =>
+  console.log("Server => Online")
 );
