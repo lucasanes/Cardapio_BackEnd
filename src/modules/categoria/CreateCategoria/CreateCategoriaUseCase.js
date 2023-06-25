@@ -3,7 +3,7 @@ const prisma = require("../../database/prisma");
 require("../../../globalFunctions")
 
 class CreateCategoriaUseCase {
-  async execute({ nome, descricao, imagem, token }) {
+  async execute({ nome, imagem, token }) {
 
     if (!verifyToken(token)) {
       throw new AppError("Sem permissão.")
@@ -18,7 +18,6 @@ class CreateCategoriaUseCase {
     const data = await prisma.categoria.create({
       data: {
         nome, 
-        descricao,
         imagem,
         restauranteId: restauranteId.id
       },

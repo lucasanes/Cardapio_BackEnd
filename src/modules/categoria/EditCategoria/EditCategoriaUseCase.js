@@ -4,7 +4,7 @@ const prisma = require("../../database/prisma");
 require("../../../globalFunctions")
 
 class EditCategoriaUseCase {
-  async execute({ id, nome, descricao, imagem, token }) {
+  async execute({ id, nome, imagem, token }) {
 
     if (!id) {
       throw new AppError("ID não existente.");
@@ -41,12 +41,6 @@ class EditCategoriaUseCase {
       }
 
       data.nome = nome
-    }
-
-    if (descricao != undefined && descricao != '') {
-      data.descricao = descricao
-    } else {
-      data.descricao = null
     }
 
     if (imagem != undefined && imagem != '') {

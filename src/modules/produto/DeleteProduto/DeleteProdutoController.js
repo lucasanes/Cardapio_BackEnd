@@ -1,0 +1,15 @@
+const DeleteProdutoUseCase = require("./DeleteProdutoUseCase");
+
+class DeleteProdutoController {
+  async handle(request, response) {
+    const deleteProdutoUseCase = new DeleteProdutoUseCase();
+
+    const {id} = request.params 
+    const {token} = request.body
+    
+    const produto = await deleteProdutoUseCase.execute({id, token});
+    response.json(produto);
+  }
+}
+
+module.exports = DeleteProdutoController;

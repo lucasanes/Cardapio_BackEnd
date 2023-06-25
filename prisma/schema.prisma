@@ -40,9 +40,8 @@ model Restaurante {
 model Categoria {
   id String @id @default(uuid())
 
-  nome      String
-  descricao String
-  imagem    String
+  nome   String
+  imagem String
 
   created_at DateTime @default(now())
 
