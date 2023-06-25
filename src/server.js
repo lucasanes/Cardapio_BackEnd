@@ -24,9 +24,7 @@ app.use((error, request, response, next) => {
   });
 });
 
-app.use(cors({
-  origin: 'https://a.com'
-}));
+app.use(cors());
 
 app.listen("8080", () =>
   console.log("Server is running")
