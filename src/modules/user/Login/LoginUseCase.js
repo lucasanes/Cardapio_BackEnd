@@ -5,66 +5,63 @@ const auth = require("../../../config/auth");
 const { compare } = require("bcrypt");
 
 class LoginUseCase {
-  async execute({username, email, senha}) {
+  async execute({username, senha}) {
     
     let user;
+    const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
    
     if (username != undefined && username != '' && username != null) {
 
       username = username.toLowerCase()
 
-      if (!username) {
-        throw new AppError("Dados necessários não informados.")
-      }
+      if (emailRegex.test(username)) {
 
-      const usernameAlreadyExists = await prisma.user.findFirst({
-        where: {
-          username,
-        },
-      });
+        const emailAlreadyExists = await prisma.user.findFirst({
+          where: {
+            email: username,
+          },
+        });
+  
+        if (!emailAlreadyExists) {
+          throw new AppError("Email ou senha incorretos.");
+        } else {
+          user = emailAlreadyExists
+        }  
 
-      if (!usernameAlreadyExists) {
-        throw new AppError("User/Email ou senha incorretos.");
       } else {
-        user = usernameAlreadyExists
-      }
 
-    } else if (email != undefined && email != '' && email != null) {
+        const usernameAlreadyExists = await prisma.user.findFirst({
+          where: {
+            username,
+          },
+        });
+  
+        if (!usernameAlreadyExists) {
+          throw new AppError("Username ou senha incorretos.");
+        } else {
+          user = usernameAlreadyExists
+        }
 
-      if (!email) {
-        throw new AppError("Dados necessários não informados.")
-      }
-
-      const emailAlreadyExists = await prisma.user.findFirst({
-        where: {
-          email,
-        },
-      });
-
-      if (!emailAlreadyExists) {
-        throw new AppError("User/Email ou senha incorretos.");
-      } else {
-        user = emailAlreadyExists
       }
 
     } else {
-      throw new AppError("Dados necessários não informados.")
+      throw new AppError("Informe seu Username ou Email.")
     }
 
-    if (senha != undefined) {
-
-      if (!senha) {
-        throw new AppError("Dados necessários não informados.")
-      }
+    if (senha != undefined && senha != '') {
 
       const match = await compare(senha, user.senha)
 
       if (!match) {
-        throw new AppError("User/Email ou senha incorretos.")        
+        if (emailRegex.test(username)) {
+          throw new AppError("Email ou senha incorretos.")
+        } else {
+          throw new AppError("Username ou senha incorretos.")
+        }
       }
 
     } else {
-      throw new AppError("Dados necessários não informados.")
+      throw new AppError("Informe sua senha.")
     }
 
     const token = sign(

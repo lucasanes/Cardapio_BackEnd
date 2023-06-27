@@ -10,6 +10,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Recovery {
+  id String @id @default(uuid())
+
+  code String
+
+  userEmail String
+  user      User   @relation(fields: [userEmail], references: [email], onDelete: Cascade)
+
+  @@map("recoveries")
+}
+
 model User {
   id String @id @default(uuid())
 
@@ -20,6 +31,7 @@ model User {
   created_at DateTime @default(now())
 
   restaurantes Restaurante[]
+  recoveries   Recovery[]
 
   @@map("users")
 }

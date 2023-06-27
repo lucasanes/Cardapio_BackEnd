@@ -9,13 +9,9 @@ class GetAllUseCase {
       throw new AppError("Ocorreu algum erro.")
     }
 
-    if (!verifyToken(id)) {
-      throw new AppError("Sem permissão.")
-    }
-
     const all = await prisma.restaurante.findFirst({
       where: {
-        userId: decodeToken(id)
+        id
       },
       include: {
         categorias: {
