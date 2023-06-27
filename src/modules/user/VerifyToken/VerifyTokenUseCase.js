@@ -19,10 +19,12 @@ class VerifyTokenUseCase {
             }
         })
         
-        return {token, user}
+        
     } else {
-        return false
+        throw new AppError("Token inválido.")
     }
+
+    return {token, user}
   }
 }
 
