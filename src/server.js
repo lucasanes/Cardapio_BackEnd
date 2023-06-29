@@ -9,6 +9,22 @@ const uploadConfig = require("./config/upload");
 
 const app = express();
 
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://cardapios-admin.vercel.app/'
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(routers)
 
@@ -16,19 +32,17 @@ app.use((error, request, response, next) => {
   if (error instanceof AppError) {
     return response.status(error.statusCode).json({
       status: error.statusCode,
-      mensagem: error.mensagem
+      msg: error.msg
     });
   }
   return response.status(500).json({
     status: 500,
-    mensagem: "Erro interno do servidor!"
+    msg: "Erro interno do servidor!"
   });
 });
-
-app.use(cors());
 
 app.use('/', express.static(uploadConfig.UPLOADS_FOLDER))
 
 app.listen(process.env.PORT || 8080, () =>
-  console.log("Server => On-line")
+  console.log("Server => On-line in " + process.env.PORT)
 );
