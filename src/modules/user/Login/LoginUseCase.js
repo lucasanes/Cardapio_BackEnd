@@ -5,47 +5,33 @@ const auth = require("../../../config/auth");
 const { compare } = require("bcrypt");
 
 class LoginUseCase {
-  async execute({username, senha}) {
+  async execute({email, senha}) {
     
     let user;
     const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
    
-    if (username != undefined && username != '' && username != null) {
+    if (email != undefined && email != '' && email != null) {
 
-      username = username.toLowerCase()
-
-      if (emailRegex.test(username)) {
+      if (emailRegex.test(email)) {
 
         const emailAlreadyExists = await prisma.user.findFirst({
           where: {
-            email: username,
+            email
           },
         });
   
         if (!emailAlreadyExists) {
-          throw new AppError("Email ou senha incorretos.");
+          throw new AppError("E-mail ou senha incorretos.");
         } else {
           user = emailAlreadyExists
         }  
 
       } else {
-
-        const usernameAlreadyExists = await prisma.user.findFirst({
-          where: {
-            username,
-          },
-        });
-  
-        if (!usernameAlreadyExists) {
-          throw new AppError("Username ou senha incorretos.");
-        } else {
-          user = usernameAlreadyExists
-        }
-
+        throw new AppError("E-mail inválido.")
       }
 
     } else {
-      throw new AppError("Informe seu Username ou Email.")
+      throw new AppError("Informe seu e-mail.")
     }
 
     if (senha != undefined && senha != '') {
@@ -53,11 +39,7 @@ class LoginUseCase {
       const match = await compare(senha, user.senha)
 
       if (!match) {
-        if (emailRegex.test(username)) {
-          throw new AppError("Email ou senha incorretos.")
-        } else {
-          throw new AppError("Username ou senha incorretos.")
-        }
+        throw new AppError("E-mail ou senha incorretos.")
       }
 
     } else {
