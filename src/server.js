@@ -11,7 +11,7 @@ const app = express();
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://cardapios-admin.vercel.app/'
+  'https://cardapioadmin.vercel.app/'
 ];
 
 const corsOptions = {
