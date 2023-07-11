@@ -6,6 +6,16 @@ const nodemailer = require("nodemailer");
 class SendRecoveryUseCase {
   async execute({email}) {
 
+    const userAlreadyExists = await prisma.user.findFirst({
+      where: {
+        email
+      }
+    })
+
+    if (userAlreadyExists == null) {
+      throw new AppError('E-mail não cadastrado.')
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

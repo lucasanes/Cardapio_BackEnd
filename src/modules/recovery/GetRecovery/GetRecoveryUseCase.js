@@ -22,7 +22,13 @@ class GetRecoveryUseCase {
       })
     }
 
-    return recoveryAlreadyExists
+    const user = await prisma.user.findFirst({
+      where: {
+        email
+      }
+    })
+
+    return user
     
   }
 }
