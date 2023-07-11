@@ -18,9 +18,13 @@ const sendRecoveryController = new SendRecoveryController();
 const GetRecoveryController = require("../modules/recovery/GetRecovery/GetRecoveryController");
 const getRecoveryController = new GetRecoveryController();
 
+const DeleteRecoveryController = require("../modules/recovery/DeleteRecovery/DeleteRecoveryController");
+const deleteRecoveryController = new DeleteRecoveryController();
+
 etcRouters.get("/restaurante/:id", getAllController.handle);
 etcRouters.post("/upload", upload.single("imagem"), uploadController.handle);
 etcRouters.post("/sendrecovery", sendRecoveryController.handle);
 etcRouters.post("/getrecovery", getRecoveryController.handle);
+etcRouters.delete("/deleterecovery/:email", deleteRecoveryController.handle);
 
 module.exports = etcRouters;
