@@ -7,18 +7,19 @@ require("../../../globalFunctions")
 class VerifyTokenUseCase {
   async execute({ token }) {
 
+    let user;
+
     if (token == undefined || token == null || token == '') {
         throw new AppError("Ocorreu algum erro.")
     }
 
     if (verifyToken(token)) {
 
-        const user = await prisma.user.findFirst({
+        user = await prisma.user.findFirst({
             where: {
                 id: decodeToken(token)
             }
         })
-        
         
     } else {
         throw new AppError("Token inválido.")
