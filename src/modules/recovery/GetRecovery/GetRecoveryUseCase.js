@@ -1,5 +1,6 @@
 const prisma = require("../../database/prisma");
 const AppError = require("../../../utils/AppError");
+const moment = require("moment")
 require('../../../globalFunctions')
 
 class GetRecoveryUseCase {
@@ -28,7 +29,10 @@ class GetRecoveryUseCase {
       }
     })
 
-    return {id: user.id, created_at: recoveryAlreadyExists.created_at}
+    const created_at = recoveryAlreadyExists.created_at
+    const created_atLocal = moment(created_at).local();
+
+    return {id: user.id, created_at: created_atLocal}
     
   }
 }
