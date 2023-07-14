@@ -30,7 +30,7 @@ model User {
   email    String @unique
   senha    String
 
-  created_at DateTime @default(now())
+  created_at String
 
   restaurantes Restaurante[]
   recoveries   Recovery[]
@@ -57,7 +57,7 @@ model Categoria {
   nome   String
   imagem String
 
-  created_at DateTime @default(now())
+  created_at String
 
   restauranteId String
   restaurante   Restaurante @relation(fields: [restauranteId], references: [id], onDelete: Cascade)
@@ -77,7 +77,7 @@ model Produto {
   precosAdd Float[]
   imagem    String
 
-  created_at DateTime @default(now())
+  created_at String
 
   categoriaId String
   categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
