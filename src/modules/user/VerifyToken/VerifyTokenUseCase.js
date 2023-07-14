@@ -18,6 +18,13 @@ class VerifyTokenUseCase {
         user = await prisma.user.findFirst({
             where: {
                 id: decodeToken(token)
+            },
+            include: {
+                restaurantes: {
+                    select: {
+                        nome: true
+                    }
+                }
             }
         })
         

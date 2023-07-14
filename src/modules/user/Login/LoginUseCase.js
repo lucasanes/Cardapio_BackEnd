@@ -18,6 +18,13 @@ class LoginUseCase {
           where: {
             email
           },
+          include: {
+            restaurantes: {
+                select: {
+                    nome: true
+                }
+            }
+        }
         });
   
         if (!emailAlreadyExists) {
