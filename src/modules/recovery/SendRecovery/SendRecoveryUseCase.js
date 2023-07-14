@@ -43,7 +43,8 @@ class SendRecoveryUseCase {
     const recovery = await prisma.recovery.create({
       data: {
         code,
-        userEmail: email
+        userEmail: email,
+        created_at: new Date()
       }
     })
 
