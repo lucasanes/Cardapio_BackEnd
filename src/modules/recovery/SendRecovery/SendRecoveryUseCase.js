@@ -40,6 +40,8 @@ class SendRecoveryUseCase {
       })
     }
 
+    console.log(created_at)
+
     const recovery = await prisma.recovery.create({
       data: {
         code,
