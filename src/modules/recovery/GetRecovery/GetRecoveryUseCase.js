@@ -14,7 +14,7 @@ class GetRecoveryUseCase {
     })
 
     if (recoveryAlreadyExists == null) {
-      throw new AppError("Este código é inválido ou foi expirado.")
+      throw new AppError("Este código é inválido.")
     } else {
       await prisma.recovery.delete({
         where: {
@@ -29,10 +29,7 @@ class GetRecoveryUseCase {
       }
     })
 
-    const created_at = recoveryAlreadyExists.created_at
-    const created_atLocal = moment(created_at).local();
-
-    return {id: user.id, created_at: created_atLocal}
+    return {id: user.id, created_at}
     
   }
 }
