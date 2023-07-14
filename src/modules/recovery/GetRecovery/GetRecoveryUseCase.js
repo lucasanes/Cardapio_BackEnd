@@ -29,7 +29,7 @@ class GetRecoveryUseCase {
       }
     })
 
-    return {id: user.id, created_at}
+    return {id: user.id, created_at: recoveryAlreadyExists.created_at}
     
   }
 }
