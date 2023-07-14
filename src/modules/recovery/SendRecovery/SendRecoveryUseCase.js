@@ -4,7 +4,7 @@ require('../../../globalFunctions')
 const nodemailer = require("nodemailer");
 
 class SendRecoveryUseCase {
-  async execute({email}) {
+  async execute({email, created_at}) {
 
     const userAlreadyExists = await prisma.user.findFirst({
       where: {
@@ -44,7 +44,7 @@ class SendRecoveryUseCase {
       data: {
         code,
         userEmail: email,
-        created_at: new Date()
+        created_at
       }
     })
 
