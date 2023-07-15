@@ -18,15 +18,12 @@ class GetAllUseCase {
         userId: decodeToken(id)
       },
       select: {
-        categorias: true
-      },
-      include: {
         categorias: {
           include: {
             produtos: true
           }
         }
-      }
+      },
     });
 
     return all;
