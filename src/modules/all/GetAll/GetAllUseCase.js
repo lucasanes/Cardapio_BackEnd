@@ -7,7 +7,7 @@ class GetAllUseCase {
 
     //a
 
-    if (!id) {
+    if (id == null || id == '' || id == undefined) {
       throw new AppError("Ocorreu algum erro.")
     }
 
