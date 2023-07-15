@@ -9,7 +9,7 @@ class GetAllUseCase {
       throw new AppError("Ocorreu algum erro.")
     }
 
-    if (!verifyToken(token)) {
+    if (!verifyToken(id)) {
       throw new AppError("Sem permissão.")
     }
 
