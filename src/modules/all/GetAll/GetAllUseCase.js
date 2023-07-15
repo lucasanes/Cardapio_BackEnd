@@ -5,6 +5,8 @@ require('../../../globalFunctions')
 class GetAllUseCase {
   async execute({id}) {
 
+    //a
+
     if (!id) {
       throw new AppError("Ocorreu algum erro.")
     }
