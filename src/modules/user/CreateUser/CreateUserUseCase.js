@@ -6,7 +6,7 @@ const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 const senhaRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])([a-zA-Z0-9!@#$%*_&^-]{8,24})$/
 
 class CreateUserUseCase {
-  async execute({username, email, senha, senhaConfirmada, nomeRestaurante, created_at, codigo }) {
+  async execute({username, email, senha, senhaConfirmada, nomeRestaurante, imagem, created_at, codigo }) {
 
     if (codigo != undefined && codigo != '' && codigo != null) {
 
@@ -98,6 +98,7 @@ class CreateUserUseCase {
     const restaurante = await prisma.restaurante.create({
       data: {
         nome: nomeRestaurante,
+        imagem,
         userId: user.id
       }
     })

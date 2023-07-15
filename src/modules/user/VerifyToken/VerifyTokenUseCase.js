@@ -22,7 +22,8 @@ class VerifyTokenUseCase {
             include: {
                 restaurantes: {
                     select: {
-                        nome: true
+                        nome: true,
+                        id: true
                     }
                 }
             }

@@ -11,9 +11,7 @@ class DeleteRecoveryUseCase {
       }
     })
 
-    if (recoveryAlreadyExists == null) {
-      throw new AppError("Não existe mais nenhuma recuperação neste e-mail.")
-    } else {
+    if (recoveryAlreadyExists != null) {
       await prisma.recovery.delete({
         where: {
           id: recoveryAlreadyExists.id

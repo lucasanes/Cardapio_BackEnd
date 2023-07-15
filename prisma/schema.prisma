@@ -41,7 +41,8 @@ model User {
 model Restaurante {
   id String @id @default(uuid())
 
-  nome String @unique
+  nome   String @unique
+  imagem String
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
