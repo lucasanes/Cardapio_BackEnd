@@ -17,6 +17,13 @@ class GetAllUseCase {
       where: {
         userId: decodeToken(id)
       },
+      select: {
+        id: false,
+        imagem: false,
+        nome: false,
+        userId: false,
+        categorias: true
+      },
       include: {
         categorias: {
           include: {
