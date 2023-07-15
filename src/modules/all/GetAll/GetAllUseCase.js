@@ -5,15 +5,17 @@ require('../../../globalFunctions')
 class GetAllUseCase {
   async execute({id}) {
 
-    //a
-
     if (id == null || id == '' || id == undefined) {
       throw new AppError("Ocorreu algum erro.")
     }
 
+    if (!verifyToken(token)) {
+      throw new AppError("Sem permissão.")
+    }
+
     const all = await prisma.restaurante.findFirst({
       where: {
-        id
+        userId: decodeToken(id)
       },
       include: {
         categorias: {
