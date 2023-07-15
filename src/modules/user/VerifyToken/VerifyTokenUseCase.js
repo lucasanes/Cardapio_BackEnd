@@ -8,6 +8,7 @@ class VerifyTokenUseCase {
   async execute({ token }) {
 
     let user;
+    let restaurante
 
     if (token == undefined || token == null || token == '') {
         throw new AppError("Ocorreu algum erro.")
@@ -19,13 +20,11 @@ class VerifyTokenUseCase {
             where: {
                 id: decodeToken(token)
             },
-            include: {
-                restaurantes: {
-                    select: {
-                        nome: true,
-                        id: true
-                    }
-                }
+        })
+
+        restaurante = await prisma.restaurante.findFirst({
+            where: {
+                userId: user.id
             }
         })
         
@@ -33,7 +32,7 @@ class VerifyTokenUseCase {
         throw new AppError("Token inválido.")
     }
 
-    return {token, user}
+    return {token, user, restaurante}
   }
 }
 

@@ -8,6 +8,7 @@ class LoginUseCase {
   async execute({email, senha}) {
     
     let user;
+    let restaurante
     const emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
    
     if (email != undefined && email != '' && email != null) {
@@ -18,15 +19,13 @@ class LoginUseCase {
           where: {
             email
           },
-          include: {
-            restaurantes: {
-                select: {
-                  nome: true,
-                  id: true
-                }
-            }
-        }
         });
+
+        restaurante = await prisma.restaurante.findFirst({
+          where: {
+            userId: emailAlreadyExists.id
+          }
+        })
   
         if (!emailAlreadyExists) {
           throw new AppError("E-mail ou senha incorretos.");
@@ -60,7 +59,7 @@ class LoginUseCase {
       {expiresIn: auth.jwt.expiresIn}
     )
 
-    return {user, token};
+    return {user, restaurante, token};
   }
 }
 
