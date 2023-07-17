@@ -10,12 +10,12 @@ const uploadConfig = require("./config/upload");
 const app = express();
 
 const allowedOrigins = [
+  'https://cardapioadmin.vercel.app',
   'http://localhost:5173',
-  'https://cardapioadmin.vercel.app/'
 ];
 
 const corsOptions = {
-  origin: function (origin, callback) {
+  origin: (origin, callback) => {
     if (allowedOrigins.includes(origin) || !origin) {
       callback(null, true);
     } else {
