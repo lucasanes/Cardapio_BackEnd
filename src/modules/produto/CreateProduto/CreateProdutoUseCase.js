@@ -3,10 +3,39 @@ const prisma = require("../../database/prisma");
 require("../../../globalFunctions")
 
 class CreateProdutoUseCase {
-  async execute({ nome, nomesAdd, descricao, imagem, preco, precosAdd, categoriaId, created_at, token }) {
+  async execute({ code, nome, nomesAdd, descricao, imagem, preco, precosAdd, categoriaId, created_at, token }) {
 
     if (!verifyToken(token)) {
       throw new AppError("Sem permissão.")
+    }
+
+    if (code == undefined || code == null || code == '') {
+      throw new AppError("Seu produto precisa ter um código.")
+    }
+
+    const codeExists = await prisma.produto.findFirst({
+      where: {
+        code
+      },
+    });
+
+    if (codeExists) {
+
+      const categoria = await prisma.categoria.findFirst({
+        where: {
+          id: codeExists.categoriaId,
+        },
+      })
+
+      const restaurante = await prisma.restaurante.findFirst({
+        where: {
+          userId: decodeToken(token)
+        }
+      })
+
+      if (categoria.restauranteId == restaurante.id) {
+        throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
+      }
     }
 
     if (nome == undefined || nome == null || nome == '') {
@@ -31,6 +60,7 @@ class CreateProdutoUseCase {
 
     const data = await prisma.produto.create({
       data: {
+        code,
         nome,
         nomesAdd,
         preco,

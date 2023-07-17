@@ -71,6 +71,7 @@ model Categoria {
 model Produto {
   id String @id @default(uuid())
 
+  code      Int
   nome      String
   nomesAdd  String[]
   descricao String
