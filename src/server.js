@@ -24,7 +24,7 @@ const corsOptions = {
   }
 };
 
-app.use(cors(corsOption));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(routers)
 
