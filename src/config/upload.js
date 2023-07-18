@@ -18,7 +18,8 @@ const MULTER = {
           name += each
         }
       })
-      const fileName = `https://cardapiobackend.up.railway.app/${name}-${fileHash}.${extensao}`;
+      const fileName = `${name}-${fileHash}.${extensao}`;
+      console.log(fileName)
 
       return callback(null, fileName);
     }
