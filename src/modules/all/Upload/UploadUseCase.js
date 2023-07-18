@@ -16,7 +16,7 @@ class UploadUseCase {
 
     const imagem = await diskStorage.saveFile(image)
 
-    return imagem;
+    return `https://cardapiobackend.up.railway.app/${imagem}`;
     
   }
 }
