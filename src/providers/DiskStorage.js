@@ -1,15 +1,23 @@
-const fs = require("fs");
-const path = require("path");
+const fs = require('fs');
+const path = require('path');
 const uploadConfig = require("../config/upload");
+const AppError = require('../utils/AppError');
+const { promisify } = require('util');
 
 class DiskStorage {
   async saveFile(file) {
-    await fs.promises.rename(
-      path.resolve(uploadConfig.TMP_FOLDER, file),
-      path.resolve(uploadConfig.UPLOADS_FOLDER, file)
-    );
+    try {
 
-    return file;
+      await fs.promises.rename(
+        path.resolve(uploadConfig.TMP_FOLDER, file),
+        path.resolve(uploadConfig.UPLOADS_FOLDER, file)
+      );
+      
+      return file;
+    } catch (error) {
+      console.log(error)
+      throw new AppError(error)
+    }
   }
 
   async deleteFile(file) {

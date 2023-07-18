@@ -10,7 +10,15 @@ const MULTER = {
     destination: TMP_FOLDER,
     filename(request, file, callback) {
       const fileHash = crypto.randomBytes(10).toString("hex");
-      const fileName = `${fileHash}-${file.originalname}`;
+      const originalNameArray = file.originalname.split('.')
+      const extensao = originalNameArray[originalNameArray.length - 1]
+      let name = '' 
+      originalNameArray.forEach((each, i) => {
+        if (i != originalNameArray.length - 1) {
+          name += each
+        }
+      })
+      const fileName = `${name}-${fileHash}.${extensao}`;
 
       return callback(null, fileName);
     }
