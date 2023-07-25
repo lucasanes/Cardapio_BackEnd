@@ -29,7 +29,7 @@ class DeleteProdutoUseCase {
       },
     });
 
-    return produtoAntiga;
+    return produtoAntigo;
   }
 }
 

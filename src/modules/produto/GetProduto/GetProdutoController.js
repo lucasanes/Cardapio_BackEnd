@@ -5,7 +5,7 @@ class GetProdutoController {
     const getProdutoUseCase = new GetProdutoUseCase();
 
     const {id} = request.params
-    const {token} = request.body
+    const token = request.headers.authorization
 
     const produto = await getProdutoUseCase.execute({id, token});
     response.status(200).json(produto);

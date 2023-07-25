@@ -9,6 +9,8 @@ class DeleteCategoriaUseCase {
       throw new AppError("ID não existente.");
     }
 
+    console.log(token)
+
     if (!verifyToken(token)) {
       throw new AppError("Sem permissão.")
     }

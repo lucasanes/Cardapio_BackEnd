@@ -5,7 +5,7 @@ class UploadController {
     const uploadUseCase = new UploadUseCase();
 
     const imagem = request.file.filename
-    const {token} = request.body
+    const token = request.headers.authorization
 
     const all = await uploadUseCase.execute({image: imagem, token});
     response.status(200).json(all);

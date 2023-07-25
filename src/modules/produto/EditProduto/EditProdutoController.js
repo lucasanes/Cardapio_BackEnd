@@ -2,8 +2,8 @@ const EditProdutoUseCase = require("./EditProdutoUseCase");
 
 class EditProdutoController {
   async handle(request, response) {
-    const { code, nome, nomesAdd, preco, precosAdd, descricao, imagem, token } = request.body;
-
+    const { code, nome, nomesAdd, preco, precosAdd, descricao, imagem } = request.body;
+    const token = request.headers.authorization
     const { id } = request.params;
     const editProdutoUseCase = new EditProdutoUseCase();
 

@@ -2,7 +2,8 @@ const EditCategoriaUseCase = require("./EditCategoriaUseCase");
 
 class EditCategoriaController {
   async handle(request, response) {
-    const { nome, imagem, token } = request.body;
+    const { nome, imagem } = request.body;
+    const token = request.headers.authorization
 
     const { id } = request.params;
     const editCategoriaUseCase = new EditCategoriaUseCase();
