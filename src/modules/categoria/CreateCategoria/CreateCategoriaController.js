@@ -5,9 +5,9 @@ class CreateCategoriaController {
 
     const createCategoriaUseCase = new CreateCategoriaUseCase();
     
-    const token = request.headers.authorization
+    request.body.token = request.headers.authorization
 
-    const data = await createCategoriaUseCase.execute(request.body, token);
+    const data = await createCategoriaUseCase.execute(request.body);
     response.status(201).json(data);
   }
 }

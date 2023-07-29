@@ -5,9 +5,9 @@ class CreateProdutoController {
 
     const createProdutoUseCase = new CreateProdutoUseCase();
 
-    const token = request.headers.authorization
+    request.body.token = request.headers.authorization
 
-    const data = await createProdutoUseCase.execute(request.body, token);
+    const data = await createProdutoUseCase.execute(request.body);
     response.status(201).json(data);
   }
 }
