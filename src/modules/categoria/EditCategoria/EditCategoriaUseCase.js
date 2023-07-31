@@ -2,9 +2,12 @@ const { hash, compare } = require("bcrypt");
 const AppError = require("../../../utils/AppError");
 const prisma = require("../../database/prisma");
 require("../../../globalFunctions")
+const DiskStorage = require("../../../providers/DiskStorage")
 
 class EditCategoriaUseCase {
   async execute({ id, nome, imagem, token }) {
+
+    const diskStorage = new DiskStorage()
 
     if (!id) {
       throw new AppError("ID não existente.");
@@ -44,7 +47,14 @@ class EditCategoriaUseCase {
     }
 
     if (imagem != undefined && imagem != '') {
-      data.imagem = imagem
+
+      if (data.imagem != imagem) {
+
+        await diskStorage.deleteFile(data.imagem.split('.app/')[1])
+
+        data.imagem = imagem
+      }
+      
     } else {
       throw new AppError("Sua categoria deve ter uma imagem.")
     }

@@ -1,15 +1,16 @@
 const prisma = require("../../database/prisma");
 const AppError = require("../../../utils/AppError");
 require("../../../globalFunctions")
+const DiskStorage = require("../../../providers/DiskStorage")
 
 class DeleteCategoriaUseCase {
   async execute({ id, token }) {
 
+    const diskStorage = new DiskStorage()
+
     if (!id) {
       throw new AppError("ID não existente.");
     }
-
-    console.log(token)
 
     if (!verifyToken(token)) {
       throw new AppError("Sem permissão.")
@@ -24,6 +25,8 @@ class DeleteCategoriaUseCase {
     if (!categoriaAntiga) {
       throw new AppError("Esta categoria não existente.");
     }
+
+    await diskStorage.deleteFile(categoriaAntiga.imagem.split('.app/')[1])
 
     await prisma.categoria.delete({
       where: {
