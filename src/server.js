@@ -7,6 +7,8 @@ const prisma = require("./modules/database/prisma");
 require("dotenv").config();
 const uploadConfig = require("./config/upload");
 
+//teste
+
 const app = express();
 
 const allowedOrigins = [
