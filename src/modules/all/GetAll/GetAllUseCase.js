@@ -19,8 +19,15 @@ class GetAllUseCase {
       },
       select: {
         categorias: {
+          orderBy: {
+            nome: 'asc'
+          },
           include: {
-            produtos: true
+            produtos: {
+              orderBy: {
+                nome: 'asc'
+              }
+            }
           }
         }
       },
