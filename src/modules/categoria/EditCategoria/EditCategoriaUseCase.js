@@ -50,8 +50,9 @@ class EditCategoriaUseCase {
 
       if (data.imagem != imagem) {
 
-        if (categoriaAntiga.imagem.includes('https://cardapiobackend.up.railway.app/')) {
-          await diskStorage.deleteFile(categoriaAntiga.imagem.split('.app/')[1])
+        
+        if (data.imagem.includes('https://cardapiobackend.up.railway.app/')) {
+          await diskStorage.deleteFile(data.imagem.split('.app/')[1])
         }
 
         data.imagem = imagem
