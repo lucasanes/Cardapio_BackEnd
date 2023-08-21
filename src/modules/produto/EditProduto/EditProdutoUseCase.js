@@ -49,6 +49,10 @@ class EditProdutoUseCase {
       throw new AppError("Seu produto deve ter um nome.")
     }
 
+    if (ativado != undefined && ativado != null) {
+      data.ativado = ativado
+    }
+
     if (nomesAdd != undefined && nomesAdd != '') {
       data.nomesAdd = nomesAdd
     } else {
