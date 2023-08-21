@@ -24,8 +24,8 @@ class EditProdutoUseCase {
       throw new AppError("Produto não existente.");
     }
 
-    if (code == undefined || code == null || code == '') {
-      throw new AppError("Seu produto precisa ter um código.")
+    if (code != undefined && code != '') {
+      data.code = Number(code)
     }
 
     const restaurante = await prisma.restaurante.findFirst({
@@ -58,7 +58,7 @@ class EditProdutoUseCase {
     }
 
     if (preco != undefined && preco != '') {
-      data.preco = preco
+      data.preco = Number(preco)
     }
 
     if (precosAdd != undefined && precosAdd != '') {

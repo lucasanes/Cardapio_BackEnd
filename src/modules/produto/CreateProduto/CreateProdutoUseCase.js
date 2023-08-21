@@ -52,11 +52,11 @@ class CreateProdutoUseCase {
 
     const data = await prisma.produto.create({
       data: {
-        code,
+        code: Number(code),
         nome,
         ativado: true,
         nomesAdd,
-        preco,
+        preco: Number(preco),
         precosAdd,
         descricao,
         imagem,
