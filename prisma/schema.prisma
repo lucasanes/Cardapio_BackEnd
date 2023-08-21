@@ -48,6 +48,7 @@ model Restaurante {
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   categorias Categoria[]
+  produtos   Produto[]
 
   @@map("restaurantes")
 }
@@ -82,8 +83,10 @@ model Produto {
 
   created_at String
 
-  categoriaId String
-  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+  categoriaId   String
+  categoria     Categoria   @relation(fields: [categoriaId], references: [id], onDelete: Cascade)
+  restauranteId String
+  restaurante   Restaurante @relation(fields: [restauranteId], references: [id], onDelete: Cascade)
 
   @@map("produtos")
 }

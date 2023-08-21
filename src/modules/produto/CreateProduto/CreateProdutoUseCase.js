@@ -13,29 +13,21 @@ class CreateProdutoUseCase {
       throw new AppError("Seu produto precisa ter um código.")
     }
 
+    const restaurante = await prisma.restaurante.findFirst({
+      where: {
+        userId: decodeToken(token)
+      }
+    })
+
     const codeExists = await prisma.produto.findFirst({
       where: {
-        code
+        code,
+        restauranteId: restaurante.id
       },
     });
 
     if (codeExists) {
-
-      const categoria = await prisma.categoria.findFirst({
-        where: {
-          id: codeExists.categoriaId,
-        },
-      })
-
-      const restaurante = await prisma.restaurante.findFirst({
-        where: {
-          userId: decodeToken(token)
-        }
-      })
-
-      if (categoria.restauranteId == restaurante.id) {
-        throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
-      }
+      throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
     }
 
     if (nome == undefined || nome == null || nome == '') {
@@ -62,13 +54,15 @@ class CreateProdutoUseCase {
       data: {
         code,
         nome,
+        ativado: true,
         nomesAdd,
         preco,
         precosAdd,
         descricao,
         imagem,
         created_at,
-        categoriaId
+        categoriaId,
+        restauranteId: restaurante.id
       },
     });
 

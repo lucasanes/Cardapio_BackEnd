@@ -4,7 +4,7 @@ const prisma = require("../../database/prisma");
 require("../../../globalFunctions")
 
 class EditProdutoUseCase {
-  async execute({ code, id, nome, nomesAdd, preco, precosAdd, descricao, imagem, token }) {
+  async execute({ code, ativado, id, nome, nomesAdd, preco, precosAdd, descricao, imagem, token }) {
 
     if (!id) {
       throw new AppError("ID não existente.");
@@ -28,29 +28,21 @@ class EditProdutoUseCase {
       throw new AppError("Seu produto precisa ter um código.")
     }
 
+    const restaurante = await prisma.restaurante.findFirst({
+      where: {
+        userId: decodeToken(token)
+      }
+    })
+
     const codeExists = await prisma.produto.findFirst({
       where: {
-        code
+        code,
+        restauranteId: restaurante.id
       },
     });
 
     if (codeExists) {
-
-      const categoria = await prisma.categoria.findFirst({
-        where: {
-          id: codeExists.categoriaId,
-        },
-      })
-
-      const restaurante = await prisma.restaurante.findFirst({
-        where: {
-          userId: decodeToken(token)
-        }
-      })
-
-      if (categoria.restauranteId == restaurante.id) {
-        throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
-      }
+      throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
     }
 
     if (nome == null || nome == undefined || nome == "") {
