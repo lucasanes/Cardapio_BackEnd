@@ -45,8 +45,8 @@ class EditProdutoUseCase {
       throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
     }
 
-    if (nome == null || nome == undefined || nome == "") {
-      throw new AppError("Seu produto deve ter um nome.")
+    if (nome != undefined && nome != '') {
+      data.nome = nome
     }
 
     if (ativado != undefined && ativado != null) {
@@ -55,32 +55,22 @@ class EditProdutoUseCase {
 
     if (nomesAdd != undefined && nomesAdd != '') {
       data.nomesAdd = nomesAdd
-    } else {
-      data.nomesAdd = null
     }
 
     if (preco != undefined && preco != '') {
       data.preco = preco
-    } else {
-      data.preco = null
     }
 
     if (precosAdd != undefined && precosAdd != '') {
       data.precosAdd = precosAdd
-    } else {
-      data.precosAdd = null
     }
 
     if (descricao != undefined && descricao != '') {
       data.descricao = descricao
-    } else {
-      data.descricao = null
     }
 
     if (imagem != undefined && imagem != '') {
       data.imagem = imagem
-    } else {
-      data.imagem = null
     }
 
     const produtoAtualizada = await prisma.produto.update({
