@@ -41,7 +41,7 @@ class EditProdutoUseCase {
       },
     });
 
-    if (codeExists) {
+    if ((codeExists) && id != codeExists.id) {
       throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
     }
 
