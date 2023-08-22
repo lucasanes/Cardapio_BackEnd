@@ -25,25 +25,28 @@ class EditProdutoUseCase {
     }
 
     if (code != undefined && code != '') {
+
+      const restaurante = await prisma.restaurante.findFirst({
+        where: {
+          userId: decodeToken(token)
+        }
+      })
+  
+      const codeExists = await prisma.produto.findFirst({
+        where: {
+          code,
+          restauranteId: restaurante.id
+        },
+      });
+  
+      if ((codeExists) && id != codeExists.id) {
+        throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
+      }
+
       data.code = Number(code)
     }
 
-    const restaurante = await prisma.restaurante.findFirst({
-      where: {
-        userId: decodeToken(token)
-      }
-    })
-
-    const codeExists = await prisma.produto.findFirst({
-      where: {
-        code,
-        restauranteId: restaurante.id
-      },
-    });
-
-    if ((codeExists) && id != codeExists.id) {
-      throw new AppError("Este código já está sendo usado por algum produto em seu restaurante.")
-    }
+    
 
     if (nome != undefined && nome != '') {
       data.nome = nome
