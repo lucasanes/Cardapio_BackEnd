@@ -21,7 +21,7 @@ class CreateProdutoUseCase {
 
     const codeExists = await prisma.produto.findFirst({
       where: {
-        code,
+        code: Number(code),
         restauranteId: restaurante.id
       },
     });
