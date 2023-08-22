@@ -77,7 +77,7 @@ model Produto {
   nome      String
   nomesAdd  String[]
   descricao String
-  preco     Float
+  preco     Float?
   precosAdd Float[]
   imagem    String
 

@@ -59,6 +59,8 @@ class EditProdutoUseCase {
 
     if (preco != undefined && preco != '') {
       data.preco = Number(preco)
+    } else {
+      data.preco = null
     }
 
     if (precosAdd != undefined && precosAdd != '') {

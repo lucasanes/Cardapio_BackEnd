@@ -43,7 +43,9 @@ class CreateProdutoUseCase {
     }
 
     if (preco == undefined || preco == null || preco == '') {
-      throw new AppError("Seu produto precisa ter um preço.")
+      if (precosAdd.length == 0) {
+        throw new AppError("Seu produto precisa ter um preço.")
+      }
     }
 
     if (categoriaId == undefined || categoriaId == null || categoriaId == '') {
