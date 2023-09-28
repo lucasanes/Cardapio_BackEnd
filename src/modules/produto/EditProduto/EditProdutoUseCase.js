@@ -55,20 +55,16 @@ class EditProdutoUseCase {
     if (ativado != undefined && ativado != null) {
       data.ativado = ativado
     }
-
-    if (nomesAdd != undefined && nomesAdd != '') {
-      data.nomesAdd = nomesAdd
-    }
+      
+    data.nomesAdd = nomesAdd
 
     if (preco != undefined && preco != '') {
       data.preco = Number(preco)
     } else {
       data.preco = null
     }
-
-    if (precosAdd != undefined && precosAdd != '') {
-      data.precosAdd = precosAdd
-    }
+      
+    data.precosAdd = precosAdd
 
     if (descricao != undefined && descricao != '') {
       data.descricao = descricao
