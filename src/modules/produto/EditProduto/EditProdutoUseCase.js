@@ -4,7 +4,7 @@ const prisma = require("../../database/prisma");
 require("../../../globalFunctions")
 
 class EditProdutoUseCase {
-  async execute({ code, ativado, id, nome, nomesAdd, preco, precosAdd, descricao, imagem, token }) {
+  async execute({ code, ativado, id, nome, nomesAdd, preco, precosAdd, descricao, imagem, categoriaId, token }) {
 
     if (!id) {
       throw new AppError("ID não existente.");
@@ -72,6 +72,10 @@ class EditProdutoUseCase {
 
     if (imagem != undefined && imagem != '') {
       data.imagem = imagem
+    }
+    
+    if (categoriaId != undefined && categoriaId != '') {
+      data.categoriaId = categoriaId
     }
 
     const produtoAtualizada = await prisma.produto.update({
