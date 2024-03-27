@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -75,10 +75,10 @@ model Produto {
   code      Int
   ativado   Boolean
   nome      String
-  nomesAdd  String[]
+  nomesAdd  String?
   descricao String
   preco     Float?
-  precosAdd Float[]
+  precosAdd Float?
   imagem    String
 
   created_at String
